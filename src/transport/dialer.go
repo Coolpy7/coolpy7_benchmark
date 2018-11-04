@@ -8,6 +8,9 @@ import (
 	"net/url"
 
 	"github.com/gorilla/websocket"
+	"log"
+	"strings"
+	"errors"
 )
 
 // The Dialer handles connecting to a server and creating a connection.
@@ -21,6 +24,9 @@ type Dialer struct {
 	DefaultWSSPort string
 
 	webSocketDialer *websocket.Dialer
+
+	Ips map[int]net.IP
+	IpIdx int
 }
 
 // NewDialer returns a new Dialer.
@@ -34,6 +40,8 @@ func NewDialer() *Dialer {
 			Proxy:        http.ProxyFromEnvironment,
 			Subprotocols: []string{"mqtt"},
 		},
+		Ips: make(map[int]net.IP),
+		IpIdx: 0,
 	}
 }
 
@@ -41,6 +49,19 @@ var sharedDialer *Dialer
 
 func init() {
 	sharedDialer = NewDialer()
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		log.Println("init ", err)
+	}
+    idx := 0
+	for _, address := range addrs {
+		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if ipnet.IP.To4() != nil && strings.HasPrefix(ipnet.IP.String(),"192.168.") {
+				sharedDialer.Ips[idx] = ipnet.IP
+				idx++
+			}
+		}
+	}
 }
 
 // Dial is a shorthand function.
@@ -66,13 +87,22 @@ func (d *Dialer) Dial(urlString string) (Conn, error) {
 		if port == "" {
 			port = d.DefaultTCPPort
 		}
+		RELOAD:
+			if len(d.Ips) == 0 {
+				return nil, errors.New("no ip cat use")
+			}
+			localaddr := &net.TCPAddr{IP:d.Ips[d.IpIdx]}
+			dl := net.Dialer{ LocalAddr: localaddr }
+			conn, err := dl.Dial("tcp", net.JoinHostPort(host, port))
+			if err != nil {
+				if err.Error() == "cannot assign requested address" {
+					d.IpIdx++
+					goto RELOAD
+				}
+				return nil, err
+			}
 
-		conn, err := net.Dial("tcp", net.JoinHostPort(host, port))
-		if err != nil {
-			return nil, err
-		}
-
-		return NewNetConn(conn), nil
+			return NewNetConn(conn), nil
 	case "tls", "mqtts":
 		if port == "" {
 			port = d.DefaultTLSPort
