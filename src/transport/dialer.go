@@ -54,14 +54,9 @@ func init() {
 		log.Println("init ", err)
 	}
 	idx := 0
-	bfirst := false
 	for _, address := range addrs {
 		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
 			if ipnet.IP.To4() != nil && strings.HasPrefix(ipnet.IP.String(), "192.168.") {
-				if !bfirst {
-					bfirst = true
-					continue
-				}
 				sharedDialer.Ips[idx] = ipnet.IP
 				idx++
 				log.Println(idx, ipnet.IP.String())
@@ -101,12 +96,9 @@ func (d *Dialer) Dial(urlString string) (Conn, error) {
 		dl := net.Dialer{LocalAddr: localaddr}
 		conn, err := dl.Dial("tcp", net.JoinHostPort(host, port))
 		if err != nil {
-			if err.Error() == "cannot assign requested address" {
-				d.IpIdx++
-				log.Println(d.IpIdx, "change local address")
-				goto RELOAD
-			}
-			return nil, err
+			d.IpIdx++
+			log.Println(d.IpIdx, "change local address")
+			goto RELOAD
 		}
 
 		return NewNetConn(conn), nil
