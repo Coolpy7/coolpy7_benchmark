@@ -14,7 +14,7 @@ import (
 	"transport"
 )
 
-var urlString = flag.String("url", "tcp://192.168.31.84:1883", "broker url")
+var urlString = flag.String("url", "tcp://192.168.200.238:1883", "broker url")
 var workers = flag.Int("workers", 100, "number of workers")
 
 func main() {
