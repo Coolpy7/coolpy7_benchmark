@@ -98,6 +98,7 @@ func (d *Dialer) Dial(urlString string) (Conn, error) {
 		if err != nil {
 			if err.Error() == "cannot assign requested address" {
 				d.IpIdx++
+				log.Println(d.IpIdx, "change local address")
 				goto RELOAD
 			}
 			return nil, err
