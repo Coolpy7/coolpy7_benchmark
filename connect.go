@@ -22,15 +22,18 @@ func main() {
 
 	fmt.Printf("Start benchmark of %s using %d workers.\n", *urlString, *workers)
 
+	clients := make(map[string]transport.Conn)
+
 	for i := 0; i < *workers; i++ {
 		id := strconv.Itoa(i)
 		if i%1000 == 0 {
 			log.Println(i)
 		}
-		consumer(id)
+		name, conn := consumer(id)
+		clients[name] = conn
 	}
 
-	fmt.Println("finish")
+	fmt.Println("finish", len(clients))
 
 	signalChan := make(chan os.Signal, 1)
 	cleanupDone := make(chan bool)
@@ -71,7 +74,7 @@ func connection(id string) transport.Conn {
 	return conn
 }
 
-func consumer(id string) {
+func consumer(id string) (string, transport.Conn) {
 	name := "consumer/" + id
-	connection(name)
+	return name, connection(name)
 }
