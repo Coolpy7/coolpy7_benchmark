@@ -25,7 +25,7 @@ type Dialer struct {
 
 	webSocketDialer *websocket.Dialer
 
-	Ips map[int]net.IP
+	Ips   map[int]net.IP
 	IpIdx int
 }
 
@@ -40,7 +40,7 @@ func NewDialer() *Dialer {
 			Proxy:        http.ProxyFromEnvironment,
 			Subprotocols: []string{"mqtt"},
 		},
-		Ips: make(map[int]net.IP),
+		Ips:   make(map[int]net.IP),
 		IpIdx: 0,
 	}
 }
@@ -53,12 +53,13 @@ func init() {
 	if err != nil {
 		log.Println("init ", err)
 	}
-    idx := 0
+	idx := 0
 	for _, address := range addrs {
 		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
-			if ipnet.IP.To4() != nil && strings.HasPrefix(ipnet.IP.String(),"192.168.") {
+			if ipnet.IP.To4() != nil && strings.HasPrefix(ipnet.IP.String(), "192.168.") {
 				sharedDialer.Ips[idx] = ipnet.IP
 				idx++
+				log.Println(idx, ipnet.IP.String())
 			}
 		}
 	}
@@ -87,22 +88,22 @@ func (d *Dialer) Dial(urlString string) (Conn, error) {
 		if port == "" {
 			port = d.DefaultTCPPort
 		}
-		RELOAD:
-			if len(d.Ips) == 0 {
-				return nil, errors.New("no ip cat use")
+	RELOAD:
+		if len(d.Ips) == 0 {
+			return nil, errors.New("no ip cat use")
+		}
+		localaddr := &net.TCPAddr{IP: d.Ips[d.IpIdx]}
+		dl := net.Dialer{LocalAddr: localaddr}
+		conn, err := dl.Dial("tcp", net.JoinHostPort(host, port))
+		if err != nil {
+			if err.Error() == "cannot assign requested address" {
+				d.IpIdx++
+				goto RELOAD
 			}
-			localaddr := &net.TCPAddr{IP:d.Ips[d.IpIdx]}
-			dl := net.Dialer{ LocalAddr: localaddr }
-			conn, err := dl.Dial("tcp", net.JoinHostPort(host, port))
-			if err != nil {
-				if err.Error() == "cannot assign requested address" {
-					d.IpIdx++
-					goto RELOAD
-				}
-				return nil, err
-			}
+			return nil, err
+		}
 
-			return NewNetConn(conn), nil
+		return NewNetConn(conn), nil
 	case "tls", "mqtts":
 		if port == "" {
 			port = d.DefaultTLSPort
