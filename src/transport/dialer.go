@@ -54,9 +54,14 @@ func init() {
 		log.Println("init ", err)
 	}
 	idx := 0
+	bfirst := false
 	for _, address := range addrs {
 		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
 			if ipnet.IP.To4() != nil && strings.HasPrefix(ipnet.IP.String(), "192.168.") {
+				if !bfirst {
+					bfirst = true
+					continue
+				}
 				sharedDialer.Ips[idx] = ipnet.IP
 				idx++
 				log.Println(idx, ipnet.IP.String())
