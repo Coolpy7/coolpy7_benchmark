@@ -14,9 +14,11 @@ import (
 	"time"
 )
 
-var urlString = flag.String("url", "tcp://192.168.100.2:1883", "broker url")
-var topic = flag.String("topic", "speed-test-%i", "the used topic")
+var urlString = flag.String("url", "tcp://127.0.0.1:1883", "broker url")
+var topic = flag.String("topic", "cp7sub%i", "the used topic")
 var workers = flag.Int("workers", 100, "number of workers")
+var cs = flag.String("cid", "testclient", "client id start with")
+var qos = flag.Uint("qos", 0, "sub qos level")
 
 func main() {
 	flag.Parse()
@@ -32,16 +34,16 @@ func main() {
 			if err != nil {
 				log.Println("callback", err)
 			}
-			log.Println(msg.Topic, msg.QOS, string(msg.Payload))
+			log.Println(msg.Topic, msg.QOS, len(msg.Payload))
 			return nil
 		}
 
 		cf, err := cl.Connect(&client.Config{
 			BrokerURL:    *urlString,
-			CleanSession: true,
+			CleanSession: false,
 			KeepAlive:    "30s",
 			ValidateSubs: true,
-			ClientID:     "worker" + id,
+			ClientID:     *cs + id,
 		})
 		if err != nil {
 			log.Println("conn", err)
@@ -52,7 +54,7 @@ func main() {
 			log.Println("conn wait", err)
 		}
 
-		sf, err := cl.Subscribe(strings.Replace(*topic, "%i", id, 1), uint8(0))
+		sf, err := cl.Subscribe(strings.Replace(*topic, "%i", id, 1), uint8(*qos))
 		if err != nil {
 			log.Println("sub", err)
 		}
