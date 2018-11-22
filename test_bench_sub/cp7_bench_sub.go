@@ -19,7 +19,7 @@ var topic = flag.String("topic", "cp7sub%i", "the used topic")
 var workers = flag.Int("workers", 100, "number of workers")
 var cs = flag.String("cid", "testclient", "client id start with")
 var qos = flag.Uint("qos", 0, "sub qos level")
-var ping = flag.Int("ping", 0, "disable ping")
+var ping = flag.Int("ping", 1, "disable ping")
 
 func main() {
 	flag.Parse()
