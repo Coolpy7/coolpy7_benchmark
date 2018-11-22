@@ -54,14 +54,16 @@ func main() {
 			log.Println("conn wait", err)
 		}
 
-		sf, err := cl.Subscribe(strings.Replace(*topic, "%i", id, 1), uint8(*qos))
-		if err != nil {
-			log.Println("sub", err)
-		}
+		if *topic != "null" {
+			sf, err := cl.Subscribe(strings.Replace(*topic, "%i", id, 1), uint8(*qos))
+			if err != nil {
+				log.Println("sub", err)
+			}
 
-		err = sf.Wait(10 * time.Second)
-		if err != nil {
-			log.Println("sub wait", err)
+			err = sf.Wait(10 * time.Second)
+			if err != nil {
+				log.Println("sub wait", err)
+			}
 		}
 	}
 
