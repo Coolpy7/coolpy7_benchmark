@@ -127,8 +127,6 @@ type Client struct {
 	tomb   tomb.Tomb
 	mutex  sync.Mutex
 	finish sync.Once
-
-	Ping bool
 }
 
 // New returns a new client that by default uses a fresh MemorySession.
@@ -137,7 +135,6 @@ func New() *Client {
 		state:       clientInitialized,
 		Session:     clientsession.NewMemorySession(),
 		futureStore: future.NewStore(),
-		Ping:        true,
 	}
 }
 
@@ -440,7 +437,7 @@ func (c *Client) processor() error {
 	first := true
 
 	// start keep alive if greater than zero
-	if c.keepAlive > 0 && c.Ping {
+	if c.keepAlive > 0 {
 		c.tomb.Go(c.pinger)
 	}
 
