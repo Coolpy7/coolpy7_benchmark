@@ -41,7 +41,7 @@ func main() {
 			log.Println("conn", err)
 		}
 
-		err = cf.Wait(1 * time.Second)
+		err = cf.Wait(2 * time.Second)
 		if err != nil {
 			log.Println("conn wait", err)
 		}
