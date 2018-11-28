@@ -20,7 +20,7 @@ var workers = flag.Int("workers", 100, "number of workers")
 var cs = flag.String("cid", "testclient", "client id start with")
 var qos = flag.Uint("qos", 0, "sub qos level")
 var clearsession = flag.Bool("clear", true, "clear session")
-var pingtime = flag.String("keepalive", "30s", "keepalive")
+var pingtime = flag.String("keepalive", "300s", "keepalive")
 
 func main() {
 	flag.Parse()
