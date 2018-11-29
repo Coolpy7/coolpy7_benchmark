@@ -2,6 +2,19 @@
 
 This is a simple MQTT benchmark tool written in Golang. The main purpose of the tool is to benchmark how many concurrent connections a MQTT broker could support.
 
+## QuickStart
+
+```
+$ git clone https://github.com/Coolpy7/coolpy7_benchmark.git
+$ cd bin
+
+//sub test
+./go_build_cp7_bench_sub_go_linux -workers=4000000 -cid=tqy -topic=null -qos=0 -url=tcp://username:passwork@192.168.200.238:1883 -keepalive=60000s -clear=true
+
+//pub test
+./go_build_cp7_bench_pub_go_linux -cid=cp7 -clear=true -keepalive=300s -qos=0 -s=256 -topic=a/b/c -url=tcp://192.168.100.2:1883 -workers=500
+```
+
 ## Sub Benchmark
 
 ```
