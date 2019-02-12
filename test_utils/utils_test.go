@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var ip = "192.168.100.2:1883"
+var ip = "127.0.0.1:1883"
 
 //测试空连接攻击，当连接建立后两秒内不进行MQTT身份验证即被Coolpy7主动断开连接
 func TestDdos(t *testing.T) {

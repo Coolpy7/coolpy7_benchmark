@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-var urlString = flag.String("url", "tcp://username:password@192.168.100.2:1883", "broker url")
+var urlString = flag.String("url", "tcp://username:password@127.0.0.1:1883", "broker url")
 var topic = flag.String("topic", "cp7sub%i", "pub topic")
 var workers = flag.Int("workers", 200, "number of workers")
 var interval = flag.Int("i", 10, "interval of connecting to the broker(ms)")

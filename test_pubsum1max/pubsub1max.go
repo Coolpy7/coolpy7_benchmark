@@ -20,7 +20,7 @@ import (
 // 一对一发布订阅测试工具
 // 本工具建立一个订单及通过一个发布测试单一对一对信时最大通信质量
 
-var urlString = flag.String("url", "tcp://192.168.100.2:1883", "broker url")
+var urlString = flag.String("url", "tcp://127.0.0.1:1883", "broker url")
 var workers = flag.Int("workers", 1, "number of workers")
 var duration = flag.Int("duration", 30, "duration in seconds")
 var publishRate = flag.Int("publish-rate", 0, "messages per second")
