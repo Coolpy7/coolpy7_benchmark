@@ -16,7 +16,7 @@ import (
 
 var urlString = flag.String("url", "tcp://127.0.0.1:1883", "broker url")
 var topic = flag.String("topic", "cp7sub%i", "the used topic")
-var workers = flag.Int("workers", 100, "number of workers")
+var workers = flag.Int("workers", 200, "number of workers")
 var cs = flag.String("cid", "testclient", "client id start with")
 var qos = flag.Uint("qos", 0, "sub qos level")
 var clearsession = flag.Bool("clear", true, "clear session")

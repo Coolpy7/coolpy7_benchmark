@@ -57,12 +57,12 @@ func main() {
 	bigData := make([]byte, *size, *size)
 
 	c := cron.New()
-	c.AddFunc("*/"+strconv.Itoa(*interval_of_msg)+" * * * * ?", func() {
+	_, _ = c.AddFunc("*/"+strconv.Itoa(*interval_of_msg)+" * * * * ?", func() {
 		go func() {
 			for i := 0; i < *workers; i++ {
 				id := strconv.Itoa(i)
 				for _, v := range clients {
-					v.Publish(strings.Replace(*topic, "%i", id, 1), bigData, uint8(*qos), false)
+					_, _ = v.Publish(strings.Replace(*topic, "%i", id, 1), bigData, uint8(*qos), false)
 					time.Sleep(time.Millisecond)
 				}
 				time.Sleep(time.Millisecond)
