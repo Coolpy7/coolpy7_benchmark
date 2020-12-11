@@ -1,4 +1,4 @@
-package test_http_publish
+package main
 
 import (
 	"bytes"
