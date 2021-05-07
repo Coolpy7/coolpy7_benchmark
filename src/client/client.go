@@ -10,11 +10,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"client/future"
-	"clientsession"
+	"coolpy7_benchmark/src/client/future"
+	"coolpy7_benchmark/src/clientsession"
+	"coolpy7_benchmark/src/packet"
+	"coolpy7_benchmark/src/transport"
 	"gopkg.in/tomb.v2"
-	"packet"
-	"transport"
 )
 
 // ErrClientAlreadyConnecting is returned by Connect if there has been already a

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"client"
+	"coolpy7_benchmark/src/client"
 	"flag"
 	"fmt"
 	"gopkg.in/robfig/cron.v2"

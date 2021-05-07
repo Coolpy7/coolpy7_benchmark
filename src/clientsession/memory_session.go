@@ -5,8 +5,8 @@ package clientsession
 import (
 	"sync"
 
-	"packet"
-	"topic"
+	"coolpy7_benchmark/src/packet"
+	"coolpy7_benchmark/src/topic"
 )
 
 // Direction denotes a packets direction.

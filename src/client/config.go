@@ -1,8 +1,8 @@
 package client
 
 import (
-	"packet"
-	"transport"
+	"coolpy7_benchmark/src/packet"
+	"coolpy7_benchmark/src/transport"
 )
 
 // A Config holds information about establishing a connection to a broker.

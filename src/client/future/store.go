@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"packet"
+	"coolpy7_benchmark/src/packet"
 )
 
 // A Store is used to store futures.

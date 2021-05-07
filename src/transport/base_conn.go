@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"packet"
+	"coolpy7_benchmark/src/packet"
 )
 
 // A Carrier is a generalized stream that can be used with BaseConn.

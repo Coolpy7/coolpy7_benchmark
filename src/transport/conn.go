@@ -4,7 +4,7 @@ import (
 	"net"
 	"time"
 
-	"packet"
+	"coolpy7_benchmark/src/packet"
 )
 
 var flushTimeout = time.Millisecond

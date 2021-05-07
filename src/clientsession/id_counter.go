@@ -3,7 +3,7 @@ package clientsession
 import (
 	"sync"
 
-	"packet"
+	"coolpy7_benchmark/src/packet"
 )
 
 // An IDCounter continuously counts packet ids.

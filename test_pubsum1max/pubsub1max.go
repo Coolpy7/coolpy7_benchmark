@@ -12,9 +12,9 @@ import (
 	"syscall"
 	"time"
 
+	"coolpy7_benchmark/src/packet"
+	"coolpy7_benchmark/src/transport"
 	"github.com/juju/ratelimit"
-	"packet"
-	"transport"
 )
 
 // 一对一发布订阅测试工具

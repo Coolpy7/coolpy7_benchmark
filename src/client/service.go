@@ -6,11 +6,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"client/future"
-	"clientsession"
+	"coolpy7_benchmark/src/client/future"
+	"coolpy7_benchmark/src/clientsession"
+	"coolpy7_benchmark/src/packet"
 	"github.com/jpillora/backoff"
 	"gopkg.in/tomb.v2"
-	"packet"
 )
 
 type command struct {

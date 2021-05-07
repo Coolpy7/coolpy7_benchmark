@@ -3,8 +3,8 @@ package client
 import (
 	"time"
 
-	"client/future"
-	"packet"
+	"coolpy7_benchmark/src/client/future"
+	"coolpy7_benchmark/src/packet"
 )
 
 // A GenericFuture is returned by publish and unsubscribe methods.

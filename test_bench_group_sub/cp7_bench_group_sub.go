@@ -1,13 +1,13 @@
 package main
 
 import (
-	"client"
+	"coolpy7_benchmark/src/client"
+	"coolpy7_benchmark/src/packet"
 	"flag"
 	"fmt"
 	"log"
 	"os"
 	"os/signal"
-	"packet"
 	"strconv"
 	"syscall"
 	"time"

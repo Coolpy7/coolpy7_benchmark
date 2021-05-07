@@ -13,7 +13,7 @@ import (
 
 func main() {
 	topic := flag.String("topic", "aaa/bbb", "The topic name to/from which to publish/subscribe")
-	broker := flag.String("broker", "tcp://192.168.101.254:1883", "The broker URI. ex: tcp://10.10.1.1:1883")
+	broker := flag.String("broker", "tcp://192.168.101.128:1883", "The broker URI. ex: tcp://10.10.1.1:1883")
 	password := flag.String("password", "", "The password (optional)")
 	user := flag.String("user", "", "The User (optional)")
 	id := flag.String("id", "testgoid", "The ClientID (optional)")

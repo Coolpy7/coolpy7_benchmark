@@ -3,7 +3,7 @@ package clientsession
 import (
 	"sync"
 
-	"packet"
+	"coolpy7_benchmark/src/packet"
 )
 
 // PacketStore is a goroutine safe packet store.

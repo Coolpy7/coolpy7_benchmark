@@ -1,13 +1,13 @@
 package main
 
 import (
-	"client"
+	"coolpy7_benchmark/src/client"
+	"coolpy7_benchmark/src/packet"
 	"flag"
 	"fmt"
 	"log"
 	"os"
 	"os/signal"
-	"packet"
 	"strconv"
 	"strings"
 	"syscall"
@@ -27,7 +27,7 @@ func main() {
 
 	for i := 0; i < *workers; i++ {
 		id := strconv.Itoa(i)
-		if i%1000 == 0 {
+		if i%100 == 0 {
 			log.Println(id)
 		}
 

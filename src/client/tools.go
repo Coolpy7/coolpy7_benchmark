@@ -3,7 +3,7 @@ package client
 import (
 	"time"
 
-	"packet"
+	"coolpy7_benchmark/src/packet"
 )
 
 // ClearSession will connect to the specified broker and request a clean session.
