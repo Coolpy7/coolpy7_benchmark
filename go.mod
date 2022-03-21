@@ -9,7 +9,7 @@ require (
 	github.com/jpillora/backoff v1.0.0
 	github.com/juju/ratelimit v1.0.1
 	github.com/stretchr/testify v1.7.0
-	github.com/valyala/fasthttp v1.26.0
+	github.com/valyala/fasthttp v1.34.0
 	gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5
 	gopkg.in/tomb.v2 v2.0.0-20161208151619-d5d1b5820637
 )
